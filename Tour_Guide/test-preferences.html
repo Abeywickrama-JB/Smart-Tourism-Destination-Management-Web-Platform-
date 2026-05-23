@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Test Preferences</title>
+</head>
+<body>
+    <h1>Setting Test Preferences</h1>
+    <button onclick="setTestPreferences()">Set Your Preferences (beach, 600, oct-dec, challenging, family)</button>
+    <button onclick="clearPreferences()">Clear All Preferences</button>
+    <button onclick="showCurrentPreferences()">Show Current Preferences</button>
+    
+    <div id="output"></div>
+    
+    <script>
+        function setTestPreferences() {
+            const preferences = {
+                destinationType: 'beach',
+                budget: 'low', // Will be normalized from 600
+                bestTimeToVisit: 'october-december', // Will be normalized from oct-dec
+                difficultyLevel: 'challenging',
+                groupSize: 'family'
+            };
+            
+            localStorage.setItem('userPreferences', JSON.stringify(preferences));
+            document.getElementById('output').innerHTML = '<h2>Preferences set!</h2><pre>' + JSON.stringify(preferences, null, 2) + '</pre>';
+        }
+        
+        function clearPreferences() {
+            localStorage.removeItem('userPreferences');
+            document.getElementById('output').innerHTML = '<h2>Preferences cleared!</h2>';
+        }
+        
+        function showCurrentPreferences() {
+            const saved = localStorage.getItem('userPreferences');
+            if (saved) {
+                document.getElementById('output').innerHTML = '<h2>Current Preferences:</h2><pre>' + JSON.stringify(JSON.parse(saved), null, 2) + '</pre>';
+            } else {
+                document.getElementById('output').innerHTML = '<h2>No preferences found</h2>';
+            }
+        }
+        
+        // Show current preferences on load
+        showCurrentPreferences();
+    </script>
+</body>
+</html>

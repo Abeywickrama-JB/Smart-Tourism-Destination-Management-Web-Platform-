@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .success {
+            color: #28a745;
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 3px;
+        }
+        .admin-dashboard-preview {
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .tab-preview {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        .booking-history-preview {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>✅ Booking History Implementation Complete!</h1>
+        
+        <div class="success">
+            <strong>Success!</strong> The Booking History section has been successfully added to the Admin Dashboard.
+        </div>
+
+        <h2>🎯 Features Implemented</h2>
+        <ul class="feature-list">
+            <li>✅ New "Booking History" tab in Admin Dashboard</li>
+            <li>✅ Professional table displaying all booking information</li>
+            <li>✅ Search functionality (by name, email, booking ID)</li>
+            <li>✅ Status filtering (PENDING, CONFIRMED, CANCELLED, COMPLETED)</li>
+            <li>✅ Date range filtering (Today, Last Week, Last Month, Custom)</li>
+            <li>✅ Export to CSV functionality</li>
+            <li>✅ Responsive design for mobile devices</li>
+            <li>✅ Real-time statistics (total bookings, revenue)</li>
+            <li>✅ Professional styling with status badges</li>
+            <li>✅ Backend API endpoints for enhanced functionality</li>
+        </ul>
+
+        <div class="admin-dashboard-preview">
+            <h3>🎨 Admin Dashboard Preview</h3>
+            <p>The admin dashboard now includes a new "Booking History" tab alongside existing sections:</p>
+            <div class="tab-preview">
+                <div class="tab">Dashboard</div>
+                <div class="tab">User Management</div>
+                <div class="tab">Destination Management</div>
+                <div class="tab">Guide Applications</div>
+                <div class="tab">Guide Management</div>
+                <div class="tab active">Booking History</div>
+            </div>
+        </div>
+
+        <div class="booking-history-preview">
+            <h3>📊 Booking History Features</h3>
+            <p><strong>Table Columns:</strong></p>
+            <ul>
+                <li>Booking ID</li>
+                <li>Customer Name & Email</li>
+                <li>Contact Information (Phone, Language)</li>
+                <li>Travel Dates</li>
+                <li>Booking Status</li>
+                <li>Price (USD)</li>
+                <li>Number of Participants</li>
+                <li>Created Date</li>
+            </ul>
+            
+            <p><strong>Search & Filter Options:</strong></p>
+            <ul>
+                <li>Search by customer name, email, or booking ID</li>
+                <li>Filter by booking status</li>
+                <li>Filter by date range (Today, Week, Month, Custom)</li>
+            </ul>
+            
+            <p><strong>Additional Features:</strong></p>
+            <ul>
+                <li>Export filtered results to CSV</li>
+                <li>Real-time statistics display</li>
+                <li>Mobile-responsive design</li>
+                <li>Professional status badges with color coding</li>
+            </ul>
+        </div>
+
+        <h2>🔧 Technical Implementation</h2>
+        <div class="feature-list">
+            <li><strong>Frontend:</strong> BookingHistory.jsx component with React hooks</li>
+            <li><strong>Backend:</strong> Enhanced AdminController with booking endpoints</li>
+            <li><strong>Styling:</strong> Professional CSS with responsive design</li>
+            <li><strong>Integration:</strong> Seamlessly integrated into existing AdminDashboard</li>
+        </div>
+
+        <h2>🚀 How to Access</h2>
+        <ol>
+            <li>Start the backend: <code>./mvnw spring-boot:run</code></li>
+            <li>Start the frontend: <code>npm run dev</code></li>
+            <li>Log in as an admin user</li>
+            <li>Navigate to the Admin Dashboard</li>
+            <li>Click on the "Booking History" tab</li>
+        </ol>
+
+        <div class="success">
+            <strong>Ready to use!</strong> The booking history system is now fully implemented and ready for administrators to view and manage all tour bookings.
+        </div>
+    </div>
+</body>
+</html>

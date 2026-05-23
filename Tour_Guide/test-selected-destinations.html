@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Destinations Feature Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .feature {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #3b82f6;
+            background: #f8f9ff;
+        }
+        .success { border-left-color: #10b981; background: #f0fdf4; }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+    <h1>Selected Destinations Feature Implementation</h1>
+    
+    <div class="test-section">
+        <h2>✅ Features Implemented</h2>
+        
+        <div class="feature success">
+            <strong>Heart Icon Selection:</strong> Users can click heart icons on recommendation cards to select destinations
+        </div>
+        
+        <div class="feature success">
+            <strong>Persistent Storage:</strong> Selected destinations are saved to localStorage and persist across page refreshes
+        </div>
+        
+        <div class="feature success">
+            <strong>View Selected Button:</strong> Button appears in recommendations header when destinations are selected, showing count
+        </div>
+        
+        <div class="feature success">
+            <strong>Selected Destinations Page:</strong> Dedicated page at /selected-destinations shows all selected destinations
+        </div>
+        
+        <div class="feature success">
+            <strong>Search Functionality:</strong> Bottom section of selected destinations page includes search to find and add more destinations
+        </div>
+        
+        <div class="feature success">
+            <strong>Global Favorites Context:</strong> Centralized state management for favorites across the application
+        </div>
+        
+        <div class="feature success">
+            <strong>Reusable Components:</strong> DestinationCard component can be used across different pages
+        </div>
+        
+        <div class="feature success">
+            <strong>Remove from Selection:</strong> Users can click hearts on selected destinations to remove them
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Testing Instructions</h2>
+        
+        <h3>Step 1: Test Recommendation Page</h3>
+        <ol>
+            <li>Navigate to <a href="http://localhost:5173/preferences" target="_blank">http://localhost:5173/preferences</a></li>
+            <li>Complete the preference questionnaire</li>
+            <li>On the recommendations page, click heart icons on several destinations</li>
+            <li>Verify the "View Selected (X)" button appears in the header</li>
+            <li>Refresh the page to verify selections persist</li>
+        </ol>
+
+        <h3>Step 2: Test Selected Destinations Page</h3>
+        <ol>
+            <li>Click the "View Selected (X)" button</li>
+            <li>Verify all selected destinations are displayed</li>
+            <li>Click heart icons to remove some destinations</li>
+            <li>Test the "Clear All" button</li>
+        </ol>
+
+        <h3>Step 3: Test Search Functionality</h3>
+        <ol>
+            <li>Scroll to the "Add More Destinations" section</li>
+            <li>Click "Show Search" to expand the search area</li>
+            <li>Search for destinations (e.g., "beach", "colombo", "wildlife")</li>
+            <li>Click heart icons on search results to add more destinations</li>
+            <li>Verify they appear in your selected destinations above</li>
+        </ol>
+
+        <h3>Step 4: Test Empty States</h3>
+        <ol>
+            <li>Remove all selected destinations</ol>
+            <li>Navigate back to recommendations page</li>
+            <li>Verify the "View Selected" button disappears</li>
+            <li>Navigate to selected destinations page</li>
+            <li>Verify the empty state message appears</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🚀 Quick Access Links</h2>
+        <button class="test-button" onclick="window.open('http://localhost:5173/preferences', '_blank')">
+            Start Preferences Questionnaire
+        </button>
+        <button class="test-button" onclick="window.open('http://localhost:5173/recommendations', '_blank')">
+            Go to Recommendations
+        </button>
+        <button class="test-button" onclick="window.open('http://localhost:5173/selected-destinations', '_blank')">
+            View Selected Destinations
+        </button>
+    </div>
+
+    <div class="test-section">
+        <h2>📁 Files Created/Modified</h2>
+        <ul>
+            <li><strong>Created:</strong> src/contexts/FavoritesContext.jsx - Global favorites management</li>
+            <li><strong>Created:</strong> src/components/common/DestinationCard.jsx - Reusable destination card</li>
+            <li><strong>Created:</strong> src/components/common/DestinationCard.css - Card styling</li>
+            <li><strong>Created:</strong> src/pages/SelectedDestinationsPage.jsx - Main selected destinations page</li>
+            <li><strong>Created:</strong> src/pages/SelectedDestinationsPage.css - Page styling</li>
+            <li><strong>Modified:</strong> src/pages/RecommendationResultsPage.jsx - Integrated favorites context</li>
+            <li><strong>Modified:</strong> src/pages/RecommendationResultsPage.css - Added button styling</li>
+            <li><strong>Modified:</strong> src/App.jsx - Added FavoritesProvider and new route</li>
+        </ul>
+    </div>
+
+    <script>
+        console.log('Selected Destinations Feature Test Page Loaded');
+        console.log('Frontend: http://localhost:5173');
+        console.log('Backend: http://localhost:8080');
+    </script>
+</body>
+</html>

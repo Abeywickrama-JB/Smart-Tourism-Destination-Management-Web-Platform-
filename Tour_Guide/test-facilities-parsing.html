@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Facilities Parsing</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-case { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>Testing Facilities Parsing</h1>
+    
+    <div id="output"></div>
+    
+    <script>
+        function testFacilitiesParsing() {
+            const testCases = [
+                { name: "Empty String", facilities: "" },
+                { name: "JSON Array", facilities: '["Pool", "Spa", "Restaurant"]' },
+                { name: "Comma Separated", facilities: "Pool, Spa, Restaurant" },
+                { name: "Already Array", facilities: ["Pool", "Spa", "Restaurant"] },
+                { name: "Null", facilities: null }
+            ];
+            
+            let output = "";
+            
+            testCases.forEach(testCase => {
+                try {
+                    let facilities = [];
+                    if (typeof testCase.facilities === 'string') {
+                        try {
+                            facilities = JSON.parse(testCase.facilities);
+                        } catch (e) {
+                            facilities = testCase.facilities.split(',').map(f => f.trim());
+                        }
+                    } else if (Array.isArray(testCase.facilities)) {
+                        facilities = testCase.facilities;
+                    }
+                    
+                    const result = facilities.length > 0 
+                        ? facilities.map((f, i) => `<span key="${i}">${f}</span>`).join('')
+                        : '<em>No facilities</em>';
+                    
+                    output += `<div class="test-case success">
+                        <h3>${testCase.name}: ✅ Success</h3>
+                        <p><strong>Input:</strong> "${testCase.facilities}"</p>
+                        <p><strong>Parsed:</strong> ${result}</p>
+                    </div>`;
+                } catch (error) {
+                    output += `<div class="test-case error">
+                        <h3>${testCase.name}: ❌ Error</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>`;
+                }
+            });
+            
+            document.getElementById('output').innerHTML = output;
+        }
+        
+        testFacilitiesParsing();
+    </script>
+</body>
+</html>

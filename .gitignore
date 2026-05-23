@@ -1,0 +1,43 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Environment files
+.env
+**/.env
+*.env
+
+# Logs
+*.log
+backend.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+
+# Build outputs
+dist/
+build/
+.expo/
+.expo-shared/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Misc
+*.tmp
+*.swp

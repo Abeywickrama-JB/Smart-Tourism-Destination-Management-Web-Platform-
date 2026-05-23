@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Search Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .search-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .results {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .destination {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+        .destination h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .destination p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .score {
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .reason {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1> Semantic Search Test</h1>
+    <p>Test the AI-powered semantic search for Sri Lankan destinations</p>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Type your query here (e.g., 'I want to relax with sunset')">
+        <br><br>
+        <button class="test-button" onclick="testQuery('I want to relax with sunset')">Test: Relax with Sunset</button>
+        <button class="test-button" onclick="testQuery('beach relaxation')">Test: Beach Relaxation</button>
+        <button class="test-button" onclick="testQuery('peaceful nature spots')">Test: Peaceful Nature</button>
+        <button class="test-button" onclick="testQuery('wildlife safari')">Test: Wildlife Safari</button>
+        <button class="test-button" onclick="testQuery('adventure hiking')">Test: Adventure Hiking</button>
+        <button class="test-button" onclick="performSearch()">Search Custom Query</button>
+    </div>
+
+    <div id="results" class="results">
+        <div class="loading">Enter a query above to test semantic search...</div>
+    </div>
+
+    <script>
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            if (!query.trim()) {
+                alert('Please enter a search query');
+                return;
+            }
+            await searchDestinations(query);
+        }
+
+        async function testQuery(query) {
+            document.getElementById('searchInput').value = query;
+            await searchDestinations(query);
+        }
+
+        async function searchDestinations(query) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="loading">Searching with AI semantic embeddings...</div>';
+
+            try {
+                const response = await fetch('http://localhost:5002/recommendations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        query: query,
+                        limit: 5
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(data, query);
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="destination">
+                        <h3>Error</h3>
+                        <p>Failed to connect to AI service: ${error.message}</p>
+                        <p>Make sure the AI service is running on port 5002</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayResults(data, query) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (!data.recommendations || data.recommendations.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="destination">
+                        <h3>No Results</h3>
+                        <p>No destinations found for query: "${query}"</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = `
+                <h2>Found ${data.count} destinations for: "${query}"</h2>
+                ${data.recommendations.map(dest => `
+                    <div class="destination">
+                        <h3>${dest.destination.name} <span class="score">${(dest.similarity_score * 100).toFixed(1)}%</span></h3>
+                        <p><strong>Category:</strong> ${dest.destination.category}</p>
+                        <p><strong>Location:</strong> ${dest.destination.location}</p>
+                        <p><strong>Rating:</strong> ${dest.destination.rating}/5.0</p>
+                        <p><strong>Description:</strong> ${dest.destination.description}</p>
+                        <div class="reason">${dest.recommendation_reason}</div>
+                    </div>
+                `).join('')}
+            `;
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Test connection on page load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch('http://localhost:5002/health');
+                if (response.ok) {
+                    console.log('AI service is connected and ready');
+                } else {
+                    throw new Error('Service not responding');
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML = `
+                    <div class="destination">
+                        <h3>Connection Error</h3>
+                        <p>Cannot connect to AI service on port 5002</p>
+                        <p>Please make sure the AI service is running: <code>PORT=5002 python app.py</code></p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Multiple Destination Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+        .success {
+            background-color: #e6ffe6;
+            color: #006600;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Multiple Destination Selection</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Submit Multiple Destination Types</h2>
+        <p>This test submits a questionnaire with multiple destination types (beach,wildlife) to verify the backend handles it correctly.</p>
+        <button onclick="testMultipleDestinations()">Run Test 1</button>
+        <div id="test1-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Verify Recommendation Logic</h2>
+        <p>This test requests recommendations with multiple destination types to verify the scoring logic works.</p>
+        <button onclick="testRecommendations()">Run Test 2</button>
+        <div id="test2-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Check Frontend Integration</h2>
+        <p>Open the questionnaire page to test the UI manually.</p>
+        <button onclick="openQuestionnaire()">Open Questionnaire</button>
+        <div id="test3-result"></div>
+    </div>
+
+    <script>
+        async function testMultipleDestinations() {
+            const resultDiv = document.getElementById('test1-result');
+            resultDiv.innerHTML = '<div class="result">Testing...</div>';
+
+            try {
+                const testData = {
+                    destinationType: 'beach,wildlife',
+                    budget: 'medium',
+                    bestTimeToVisit: 'december-march',
+                    difficultyLevel: 'easy',
+                    groupSize: 'couple'
+                };
+
+                const response = await fetch('http://localhost:8080/api/preferences/questionnaire', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    resultDiv.innerHTML = `<div class="result success">✅ Test 1 Passed: Multiple destinations submitted successfully<br>Response: ${JSON.stringify(result, null, 2)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">❌ Test 1 Failed: ${response.status} - ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Test 1 Failed: ${error.message}</div>`;
+            }
+        }
+
+        async function testRecommendations() {
+            const resultDiv = document.getElementById('test2-result');
+            resultDiv.innerHTML = '<div class="result">Testing...</div>';
+
+            try {
+                const testData = {
+                    destinationType: 'beach,wildlife',
+                    budget: 'medium',
+                    bestTimeToVisit: 'december-march',
+                    difficultyLevel: 'easy',
+                    groupSize: 'couple'
+                };
+
+                const response = await fetch('http://localhost:8080/api/destinations/recommendations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                if (response.ok) {
+                    const recommendations = await response.json();
+                    const beachCount = recommendations.filter(r => r.destination && r.destination.category === 'beach').length;
+                    const wildlifeCount = recommendations.filter(r => r.destination && r.destination.category === 'wildlife').length;
+                    
+                    resultDiv.innerHTML = `<div class="result success">✅ Test 2 Passed: Recommendations received<br>
+                    Total recommendations: ${recommendations.length}<br>
+                    Beach destinations: ${beachCount}<br>
+                    Wildlife destinations: ${wildlifeCount}<br>
+                    <details><summary>Full Response</summary><pre>${JSON.stringify(recommendations, null, 2)}</pre></details></div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">❌ Test 2 Failed: ${response.status} - ${response.statusText}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Test 2 Failed: ${error.message}</div>`;
+            }
+        }
+
+        function openQuestionnaire() {
+            const resultDiv = document.getElementById('test3-result');
+            resultDiv.innerHTML = `<div class="result success">✅ Opening questionnaire page in a new tab...</div>`;
+            window.open('http://localhost:5173/preferences', '_blank');
+        }
+
+        // Auto-run tests when page loads
+        window.onload = function() {
+            setTimeout(() => {
+                console.log('Ready to test multiple destination selection feature');
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
