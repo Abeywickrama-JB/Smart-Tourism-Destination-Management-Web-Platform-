@@ -171,3 +171,17 @@ The implementation provides a complete admin management system with:
 - **Modern responsive UI**
 
 The system is now ready for production use with proper admin controls and security measures in place.
+
+
+
+## 📺 Project Walkthrough & Demo Video
+
+Click on the image below to watch the full application demonstration video on Google Drive:
+
+[![Watch the Demo Video](https://github.com/user-attachments/assets/2a885b06-13f6-4860-b690-c047a7af4a08)](https://drive.google.com/file/d/1UD5DzKWjhDSgGdyQnluGioJcFhpM0RRZ/view?usp=drive_link)
+
+
+
+
+
+
